@@ -28,11 +28,11 @@ unit-test: ${GO} ## Run ALL unit tests
 integration-test: ${GO} ## Run integration tests
 	@echo TODO
 
-benchmark: ${GO} ## Run benchmarks
-	${GO} test -v -bench=. -run='^S' -benchmem
+benchmark: ${GO} ## Run ALL benchmarks
+	${GO} test -v -bench=. -run='^S' -benchmem ./...
 
 fuzz: ${GO} ## Run fuzzy tests
-	@echo TODO
+	${GO} test -v -fuzz=. -run='^S' ./...
 
 build: ${GO} ## Build binary
 	@echo TODO
