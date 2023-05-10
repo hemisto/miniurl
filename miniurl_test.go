@@ -50,3 +50,10 @@ func ExampleHash() {
 	// output:
 	// 5f8ae3d142f2dca236f941f71b263949
 }
+
+func BenchmarkHash(b *testing.B) {
+	const input = "https://github.com/hemisto/miniurl"
+	for n := 0; n < b.N; n++ {
+		miniurl.Hash(input)
+	}
+}
