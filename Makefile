@@ -23,6 +23,7 @@ tidy: ${GO} ## Tidy Go modules
 	${GO} mod tidy
 
 unit-test: ${GO} ## Run ALL unit tests
+	mkdir -p ${TARGET_DIR}
 	${GO} test -v -cover -coverprofile=${TARGET_DIR}/cover.out ./...
 
 integration-test: ${GO} ## Run integration tests
