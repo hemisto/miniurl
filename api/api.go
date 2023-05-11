@@ -9,7 +9,7 @@ import (
 )
 
 type Handler interface {
-	AddUrl(url string) (hash string, err error)
+	Hash(url string) (hash string, err error)
 }
 
 type API struct {
@@ -38,7 +38,7 @@ func (a *API) AddUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params
 		return
 	}
 
-	hash, err := a.handler.AddUrl(v.Url)
+	hash, err := a.handler.Hash(v.Url)
 	if err != nil {
 		//ToDo
 		return

@@ -41,6 +41,6 @@ type strHandler struct {
 	str string
 }
 
-func (h *strHandler) AddUrl(url string) (hash string, err error) {
+func (h *strHandler) Hash(url string) (hash string, err error) {
 	return h.str, nil
 }
