@@ -44,15 +44,16 @@ func (a *API) AddUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params
 
 	hash, err := a.handler.Hash(v.Url)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		err = json.NewEncoder(w).Encode(ErrResp{Msg: "error occured while generating hash"})
-		if err != nil {
-			slog.Error(err.Error())
-		}
+		writeHttpResponse(w, http.StatusBadRequest, ErrResp{Msg: "error occured while generating hash"})
 		return
 	}
 
-	err = json.NewEncoder(w).Encode(AddUrlResp{Url: v.Url, Hash: hash})
+	writeHttpResponse(w, http.StatusOK, AddUrlResp{Url: v.Url, Hash: hash})
+}
+
+func writeHttpResponse(w http.ResponseWriter, status int, response any) {
+	w.WriteHeader(status)
+	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
 		slog.Error(err.Error())
 	}
