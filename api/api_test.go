@@ -30,9 +30,16 @@ func TestApi_AddUrl(t *testing.T) {
 			expectedBody:       `{"url": "https://github.com/gourses/miniurl/blob/main/LICENSE", "hash": "testValue"}`,
 		},
 		{
+			name:               "return status bad request and error when payload is not valid json",
+			payload:            `not_valid_json`,
+			handler:            &handlerMockSuccess{str: ""},
+			expectedStatusCode: http.StatusBadRequest,
+			expectedBody:       `{"msg": "error occured while parsing payload"}`,
+		},
+		{
 			name:               "should return bad request and error when hash returns error",
 			payload:            `{"url": "https://github.com/gourses/miniurl/blob/main/LICENSE"}`,
-			handler:            &handlerMockFail{str: "testValue"},
+			handler:            &handlerMockFail{str: ""},
 			expectedStatusCode: http.StatusBadRequest,
 			expectedBody:       `{"msg": "error occured while generating hash"}`,
 		},

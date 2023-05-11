@@ -38,7 +38,7 @@ func (a *API) AddUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params
 	var v AddUrlReq
 	err := json.NewDecoder(r.Body).Decode(&v)
 	if err != nil {
-		//ToDo
+		writeHttpResponse(w, http.StatusBadRequest, ErrResp{Msg: "error occured while parsing payload"})
 		return
 	}
 
