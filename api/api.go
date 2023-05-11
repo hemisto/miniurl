@@ -30,6 +30,10 @@ type AddUrlResp struct {
 	Hash string `json:"hash"`
 }
 
+type ErrResp struct {
+	Msg string `json:"msg"`
+}
+
 func (a *API) AddUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var v AddUrlReq
 	err := json.NewDecoder(r.Body).Decode(&v)
@@ -40,7 +44,11 @@ func (a *API) AddUrl(w http.ResponseWriter, r *http.Request, p httprouter.Params
 
 	hash, err := a.handler.Hash(v.Url)
 	if err != nil {
-		//ToDo
+		w.WriteHeader(http.StatusBadRequest)
+		err = json.NewEncoder(w).Encode(ErrResp{Msg: "error occured while generating hash"})
+		if err != nil {
+			slog.Error(err.Error())
+		}
 		return
 	}
 
